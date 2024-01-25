@@ -2,21 +2,21 @@
 
 class Enclos {
     protected int $limitNumberOfAnimals = 6;
-    protected array $numberOfAnimals;
-    protected array $enclosureType;
+    protected int $numberOfAnimals = 0;
+    protected string $enclosureType;
     protected string $enclosureName;
-    protected array $cleanLiness;
+    protected string $cleanLiness;
 
 
-    public function __construct($numberOfAnimals, $enclosureType, $enclosureName, $cleanLiness){
+    public function __construct(array $data ){
         
-        $this->numberOfAnimals = $numberOfAnimals;
-        $this->enclosureType = $enclosureType;
-        $this->enclosureName = $enclosureName;
-        $this->cleanLiness = $cleanLiness;
+        $this->numberOfAnimals = $data['numberOfAnimals'];
+        $this->enclosureType = $data['enclosureType'];
+        $this->enclosureName = $data['enclosureName'];
+        $this->cleanLiness = $data['cleanLiness'];
         
     }
-
+   
 
     /**
      * Get the value of numberOfAnimals
@@ -53,6 +53,7 @@ class Enclos {
      */ 
     public function setEnclosureType($enclosureType)
     {
+        
         $this->enclosureType = $enclosureType;
 
         return $this;
