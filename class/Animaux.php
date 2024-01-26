@@ -2,6 +2,7 @@
 
 abstract class Animaux
 {
+    protected int $id;
     protected string $species_name;
     protected int $weight;
     protected float $size;

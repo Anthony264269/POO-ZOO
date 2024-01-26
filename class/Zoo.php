@@ -4,6 +4,7 @@ include_once('./utils/autoload.php');
 // require_once('../utils/connexion_database.php');
 
 class Zoo {
+    protected int $id;
     protected string $nameZoo;
     protected $createdEmploy ;
     protected int $numberEnclosurMax = 10 ;
@@ -12,7 +13,7 @@ class Zoo {
     public function __construct(string $nameZoo, array $data)
     {
         $this->nameZoo = $nameZoo;
-        $this->createdEmploy = new Employ($data['nameEmploy'], $data['ageEmploy'], $data['sexeEmploy']);
+        $this->createdEmploy = new Employ($data);
     }
 
     public function displayEnclosur()
@@ -104,6 +105,26 @@ class Zoo {
     public function setArrayEnclosur($arrayEnclosur)
     {
         $this->arrayEnclosur = $arrayEnclosur;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

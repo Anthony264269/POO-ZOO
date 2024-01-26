@@ -1,7 +1,7 @@
 <?php
 
 try {
-    $dsn = 'mysql:hots=localhost;dbname=POO-zoo';
+    $dsn = 'mysql:hots=localhost;dbname=zoo';
 
     $username = 'root';
 
@@ -9,7 +9,7 @@ try {
 
     $db = new PDO($dsn, $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //echo "ça fonctionne";
+    // echo "ça fonctionne";
 } catch (PDOException $message) {
 
     echo "il y a un problème <br>" . $message;
