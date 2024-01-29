@@ -1,7 +1,6 @@
 <?php
 
-require_once('./utils/autoload.php');
-require_once('./utils/connexion_database.php');
+
 
 class ZooManagement {
 
@@ -20,7 +19,7 @@ class ZooManagement {
         $request->execute([
             'name_zoo' => $nameZoo->getNameZoo()
         ]);
-        $result = $request->fetchAll();
+        $result = $request->fetch();
         return $result;
     }
 
@@ -40,15 +39,18 @@ class ZooManagement {
 
         $id = $this->db->lastInsertId();
            $nameZoo->setId($id);
+           $_SESSION['idZoo'] = $id;
+        //    var_dump($_SESSION['idZoo']);
 
 
-        header('Location: ./class/Interface.php?error=J ai bien créé mon compte et je suis connecté !!!');
+        // header('Location: ./class/Interface.php?error=J ai bien créé mon compte et je suis connecté !!!');
 
     } else {
 
 
-
-       header('Location: ./class/Interface.php?success=Mon compte existe déja et je suis connecté');
+        $_SESSION['idZoo'] = $existingZoo['id'];
+        // var_dump($_SESSION['idZoo']);
+     
 
 }
 

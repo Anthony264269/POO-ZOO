@@ -53,15 +53,15 @@ class Enclos {
      */ 
     public function setEnclosureType($enclosureType)
     {
-        
-        $this->enclosureType = $enclosureType;
-
+        // Liste des types autorisés
+        $allowedTypes = ['Enclos', 'Voliere', 'Aquarium'];
+    
+        // Vérifie si le type passé est autorisé
+        if (in_array($enclosureType, $allowedTypes)) {
+            $this->enclosureType = $enclosureType;
+        } 
         return $this;
     }
-
-    /**
-     * Get the value of enclosureName
-     */ 
     public function getEnclosureName()
     {
         return $this->enclosureName;

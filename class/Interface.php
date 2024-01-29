@@ -1,6 +1,7 @@
 <?php
 
-include_once('../utils/autoload.php');
+require_once('../utils/autoload.php');
+require_once('../utils/connexion_database.php');
 
 
 
@@ -14,10 +15,10 @@ if (
     // $this->enclosureName = $enclosureName;
     // $this->cleanLiness = $cleanLiness;
     // $this->numberOfAnimals = $numberOfAnimals;
-    var_dump(intval($_POST['number-of-animals']));
-    var_dump($_POST['enclosure-type']);
-    var_dump($_POST['enclosure-name']);
-    var_dump($_POST['clean-liness']);
+    // var_dump(intval($_POST['number-of-animals']));
+    // var_dump($_POST['enclosure-type']);
+    // var_dump($_POST['enclosure-name']);
+    // var_dump($_POST['clean-liness']);
 
     $arrayStatEnclosure = array(
 
@@ -28,28 +29,30 @@ if (
 
     );
 
-    $
 
-    $arrayEmploy = array(
-        'nameEmploy' => $resultEmploy['name_employ'],
-        'ageEmploy' => $resultEmploy['age_employ'],
-        'sexeEmploy' => $resultEmploy['sexe_employ'],
-        
-    );
-  
-    
+
+    // $arrayEmploy = array(
+
+    //     'nameEmploy' =>  $_SESSION['name-employ'],
+    //     'ageEmploy' => $_POST['age_employ'],
+    //     'sexeEmploy' => $_POST['sexe_employ'],
+    //     'id_zoo' =>  $_SESSION['idZoo'],
+    // );
+    // var_dump($arrayEmploy);
+
+
+
     $enclos = $_POST['enclosure-type'];
     $newEnclos = new $enclos($arrayStatEnclosure);
-    $newEmployManagement = new EmployManagement($db);
-    $resultEmploy = $newEmployManagement->checkEmploy($newEmploy);
-    $newEmploy = new Employ($arrayEmploy);
-    
-    // var_dump($newEnclos);
-
-
-    // var_dump($arrayStatEnclosure);
-    // $newEnclosure = new Enclos();
+   
 }
+
+$newEmployManagement = new EmployManagement($db);
+$resultEmploy = $newEmployManagement->findById($_SESSION['employ_id']);
+
+var_dump($resultEmploy); 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -68,34 +71,34 @@ if (
     <?php if (isset($_GET['error'])) { ?>
         <div class="alert alert-success mt-4" role="alert">
             <?php echo $_GET['error'] ?>
-            </div>
-            <?php } else if (isset($_GET['success'])) { ?>
-                <div class="alert alert-success mt-4" role="alert">
-                    <?php echo $_GET['success'] ?>  
-                </div>
-            <?php } ?>
-            <h1 class="d-flex justify-content-center">Mon Zoo:</h1>
-            <div class="d-flex ">
-                <form action="" method="post">
+        </div>
+    <?php } else if (isset($_GET['success'])) { ?>
+        <div class="alert alert-success mt-4" role="alert">
+            <?php echo $_GET['success'] ?>
+        </div>
+    <?php } ?>
+    <h1 class="d-flex justify-content-center">Mon Zoo:</h1>
+    <div class="d-flex ">
+        <form action="" method="post">
 
-                    <h3>Crée un enclos :</h3>
+            <h3>Crée un enclos :</h3>
 
-                    <label for="enclosure-name"> Nom de l'enclos :</label>
-                    <input type="text" name="enclosure-name" placeholder="Nom de l'enclos" require>
+            <label for="enclosure-name"> Nom de l'enclos :</label>
+            <input type="text" name="enclosure-name" placeholder="Nom de l'enclos" require>
 
-                    <select name="enclosure-type" id="enclosure-type" required>
-                        <option value="Enclos">Normal</option>
-                        <option value="Voliere">Voliére</option>
-                        <option value="Aquarium">Bassin</option>
-                    </select>
-                    <input type="hidden" name="number-of-animals" value="0">
-                    <input type="hidden" name="clean-liness" value="clean">
-                    <button type="submit">Valider</button>
+            <select name="enclosure-type" id="enclosure-type" required>
+                <option value="Enclos">Normal</option>
+                <option value="Voliere">Voliére</option>
+                <option value="Aquarium">Bassin</option>
+            </select>
+            <input type="hidden" name="number-of-animals" value="0">
+            <input type="hidden" name="clean-liness" value="clean">
+            <button type="submit">Valider</button>
 
 
-                </form>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

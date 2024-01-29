@@ -1,6 +1,7 @@
 <?php
 require_once('./utils/autoload.php');
 require_once('./utils/connexion_database.php');
+
 // require_once('./utils/connexion_database.php');
 if (
     isset($_POST['name-zoo']) && !empty($_POST['name-zoo']) &&
@@ -11,17 +12,20 @@ if (
 ) {
 // var_dump($_POST);
     $nameZoo = $_POST['name-zoo'];
+    $nameEmploy = $_POST['name-employ'];
     $arrayEmploy  = array(
-        'nameEmploy' => $_POST['name-employ'],
-        'ageEmploy' => $_POST['age-employ'],
-        'sexeEmploy' => $_POST['sexe-employ'],
+        'name_employ' => $_POST['name-employ'],
+        'age_employ' => $_POST['age-employ'],
+        'sexe_employ' => $_POST['sexe-employ'],
     );
     $newZooManagement = new ZooManagement($db);
     $newZoo = new Zoo($nameZoo,$arrayEmploy);
-
+    $newEmploy = $newZoo->getCreatedEmploy();
     // var_dump($newZoo);
     // echo $newZoo->getNameZoo();
     $newZooManagement->addZoo($newZoo);
+    $newEmployManagement = new EmployManagement($db);
+    $newEmployManagement->addEmploy($newEmploy);
     // var_dump($newZooManagement);
 }
 

@@ -1,20 +1,23 @@
 <?php
 
-include_once('./utils/autoload.php');
-// require_once('../utils/connexion_database.php');
+
+
 
 class Employ
 {
     protected int $id;
     protected string $nameEmploy;
-    protected string $ageEmploy;
+    protected $ageEmploy;
     protected string $sexeEmploy;
 
     public function __construct($data)
     {
-        $this->nameEmploy = $data['nameEmploy'];
-        $this->ageEmploy = $data['ageEmploy'];
-        $this->sexeEmploy = $data['sexeEmploy'];
+        if(isset($data['id'])){
+           $this->id = $data['id'];
+        }
+        $this->nameEmploy = $data['name_employ'];
+        $this->ageEmploy = $data['age_employ'];
+        $this->sexeEmploy = $data['sexe_employ'];
     }
 
 
