@@ -1,11 +1,13 @@
 <?php
 
 class Enclos {
+    protected int $id;
     protected int $limitNumberOfAnimals = 6;
-    protected int $numberOfAnimals = 0;
+    protected int $numberOfAnimals;
     protected string $enclosureType;
     protected string $enclosureName;
     protected string $cleanLiness;
+    protected int $idZoo;
 
 
     public function __construct(array $data ){
@@ -18,19 +20,13 @@ class Enclos {
     }
    
 
-    /**
-     * Get the value of numberOfAnimals
-     */ 
+   
     public function getNumberOfAnimals()
     {
         return $this->numberOfAnimals;
     }
 
-    /**
-     * Set the value of numberOfAnimals
-     *
-     * @return  self
-     */ 
+   
     public function setNumberOfAnimals($numberOfAnimals)
     {
         $this->numberOfAnimals = $numberOfAnimals;
@@ -38,28 +34,18 @@ class Enclos {
         return $this;
     }
 
-    /**
-     * Get the value of enclosureType
-     */ 
+  
     public function getEnclosureType()
     {
         return $this->enclosureType;
     }
 
-    /**
-     * Set the value of enclosureType
-     *
-     * @return  self
-     */ 
+   
     public function setEnclosureType($enclosureType)
     {
-        // Liste des types autorisés
-        $allowedTypes = ['Enclos', 'Voliere', 'Aquarium'];
-    
-        // Vérifie si le type passé est autorisé
-        if (in_array($enclosureType, $allowedTypes)) {
+       
             $this->enclosureType = $enclosureType;
-        } 
+     
         return $this;
     }
     public function getEnclosureName()
@@ -67,11 +53,7 @@ class Enclos {
         return $this->enclosureName;
     }
 
-    /**
-     * Set the value of enclosureName
-     *
-     * @return  self
-     */ 
+   
     public function setEnclosureName($enclosureName)
     {
         $this->enclosureName = $enclosureName;
@@ -79,22 +61,30 @@ class Enclos {
         return $this;
     }
 
-    /**
-     * Get the value of cleanLiness
-     */ 
+    
     public function getCleanLiness()
     {
         return $this->cleanLiness;
     }
 
-    /**
-     * Set the value of cleanLiness
-     *
-     * @return  self
-     */ 
+   
     public function setCleanLiness($cleanLiness)
     {
         $this->cleanLiness = $cleanLiness;
+
+        return $this;
+    }
+
+   
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

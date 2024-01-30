@@ -27,7 +27,7 @@ class EmployManagement
 
         $_SESSION['name-employ'] = $nameEmploy->getNameEmploy();
         $_SESSION['employ_id'] = $resultEmploy['id'];
-
+        header('Location: ./class/Interface.php?success=Mon compte existe déja et je suis connecté');
         // var_dump($_SESSION['resultEmploy']); 
         return $resultEmploy;
     }
@@ -64,7 +64,7 @@ class EmployManagement
             'id' => $id
         ]);
         $result = $request->fetch(); 
-        var_dump($result);
+        // var_dump($result);
         $newEmploy = new Employ($result);
         return $newEmploy;
     }
