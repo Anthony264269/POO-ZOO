@@ -10,15 +10,36 @@ class Enclos {
     protected int $idZoo;
 
 
-    public function __construct(array $data ){
-        
-        $this->numberOfAnimals = $data['numberOfAnimals'];
-        $this->enclosureType = $data['enclosureType'];
-        $this->enclosureName = $data['enclosureName'];
-        $this->cleanLiness = $data['cleanLiness'];
-        
+    public function __construct(array $data)
+    {
+        $this->hydrate($data);
+    }
+
+
+    public function hydrate(array $data) {
+
+        if(isset($data['enclosure_type'])) {
+            $this->setEnclosureType($data['enclosure_type']);
+        }
+
+        if(isset($data['id'])) {
+            $this->setId($data['id']);
+        }
+
+        if(isset($data['enclosure_name'])) {
+            $this->setEnclosureName($data['enclosure_name']);
+
+        }
+        if(isset($data['cleanLiness'])) {
+            $this->setCleanLiness($data['cleanLiness']);
+
+        }
+        if(isset($data['number_animals'])) {
+            $this->setNumberOfAnimals($data['number_animals']);
+        }
     }
    
+
 
    
     public function getNumberOfAnimals()

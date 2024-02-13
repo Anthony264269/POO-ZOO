@@ -10,11 +10,11 @@ class EnclosManagement
         $this->db = $db;
     }
 
-    public function checkEnclos(Enclos $enclosurname)
+    public function checkEnclos(Enclos $enclosurename)
     {
         $request = $this->db->prepare('SELECT * FROM enclos WHERE enclosure_name =:enclosure_name');
         $request->execute([
-            'enclosure_name' => $enclosurname->getEnclosureName()
+            'enclosure_name' => $enclosurename->getEnclosureName()
         ]);
         // Utiliser fetch pour obtenir les résultats de la requête
         $result = $request->fetch(PDO::FETCH_ASSOC);
@@ -22,6 +22,7 @@ class EnclosManagement
         // Si des résultats sont trouvés, cela signifie que l'enclos existe déjà
         return ($result !== false);
     }
+
     public function numberMaxEnclos()
     {
         $idZoo = $_SESSION['idZoo'];
@@ -33,18 +34,31 @@ class EnclosManagement
 
         return count($statement);
     }
+
+    public function deleteEnclos(Enclos $enclos)
+    {
+
+
+        $sql = "DELETE FROM enclos WHERE enclos.id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $enclos->getId(), PDO::PARAM_INT);
+        $stmt->execute();
+    }
     public function addEnclos(Enclos $enclosurname)
     {
         $existingenclos = $this->checkEnclos($enclosurname);
-        var_dump($existingenclos);
         $numberEnclos = $this->numberMaxEnclos();
 
-        if ($numberEnclos >= 6) {
-            echo 'Vous ne pouvez plus ajouter des enclos!!!';
+        if ($numberEnclos >= 6) { ?>
+            <div id="notification" class="alert alert-danger mt-4" role="alert">
+                <?php ?>
+                <?php echo 'Vous ne pouvez plus ajouter des enclos !'; ?>
+            </div>
+<?php
         } else {
             if (!$existingenclos) {
 
-                $request = $this->db->prepare("INSERT INTO enclos (number_animals, enclosure_type, enclosure_name, id_zoo) VALUE (:number_animals, :enclosure_type, :enclosure_name, :id_zoo) ");
+                $request = $this->db->prepare("INSERT INTO enclos (number_animals ,enclosure_type, enclosure_name, id_zoo) VALUE (:number_animals , :enclosure_type,:enclosure_name, :id_zoo)");
                 $request->execute([
                     'number_animals' => $enclosurname->getNumberOfAnimals(),
                     'enclosure_type' => $enclosurname->getEnclosureType(),
@@ -57,18 +71,31 @@ class EnclosManagement
 
     public function enclosurePoster()
     {
-
-        $result = $this->db->query("SELECT * FROM enclos ORDER BY id DESC");
-        $result->execute();
+        $idZoo = $_SESSION['idZoo'];
+        $result = $this->db->query("SELECT * FROM enclos WHERE enclos.id_zoo = $idZoo ORDER BY id DESC");
         $posts = $result->fetchAll();
 
-        return $posts;
+
+        $postsArray = [];
+        foreach ($posts as $post) {
+            $newPost = new Enclos($post);
+            $postsArray[] = $newPost;
+        }
+
+        return $postsArray;
     }
 
-    public function deleteEnclos()
+    public function findById($id)
     {
 
-        $request = $this->db->prepare("DELETE FROM enclos WHERE id");
-        $request->execute();
+        $request = $this->db->prepare('SELECT * FROM enclos WHERE enclos.id = :id');
+        $request->execute([
+            'id' => $id
+        ]);
+        $result = $request->fetch();
+        // var_dump($result);
+        $newEnclos = new Enclos($result);
+
+        return $newEnclos;
     }
 }

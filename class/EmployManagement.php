@@ -57,13 +57,15 @@ class EmployManagement
             header('Location: ./class/Interface.php?success=Mon compte existe déja et je suis connecté');
         }
     }
+
     public function findById($id)
     {
+
         $request = $this->db->prepare('SELECT * FROM employ WHERE id = :id');
         $request->execute([
             'id' => $id
         ]);
-        $result = $request->fetch(); 
+        $result = $request->fetch();
         // var_dump($result);
         $newEmploy = new Employ($result);
         return $newEmploy;

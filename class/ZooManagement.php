@@ -1,8 +1,10 @@
 <?php
 
+require_once('./utils/autoload.php');
+require_once('./utils/connexion_database.php');
 
-
-class ZooManagement {
+class ZooManagement
+{
 
     private PDO $db;
 
@@ -20,40 +22,35 @@ class ZooManagement {
             'name_zoo' => $nameZoo->getNameZoo()
         ]);
         $result = $request->fetch();
+
         return $result;
     }
 
 
-    public function addZoo(Zoo $nameZoo) {
+    public function addZoo(Zoo $nameZoo)
+    {
 
-    $existingZoo = $this->checkZoo($nameZoo);
+        $existingZoo = $this->checkZoo($nameZoo);
 
-    if (empty($existingZoo)) {
-      
-         $request = $this->db->prepare('INSERT INTO zoo (name_zoo) VALUES (:name_zoo)');
-        $request->execute([
+        if (empty($existingZoo)) {
 
-            'name_zoo' => $nameZoo->getNameZoo()
-            
-        ]);
+            $request = $this->db->prepare('INSERT INTO zoo (name_zoo) VALUES (:name_zoo)');
+            $request->execute([
 
-        $id = $this->db->lastInsertId();
-           $nameZoo->setId($id);
-           $_SESSION['idZoo'] = $id;
-        //    var_dump($_SESSION['idZoo']);
+                'name_zoo' => $nameZoo->getNameZoo()
 
+            ]);
 
-        // header('Location: ./class/Interface.php?error=J ai bien créé mon compte et je suis connecté !!!');
-
-    } else {
+            $id = $this->db->lastInsertId();
+            $_SESSION['idZoo'] = $id;
+            $nameZoo->setId($id);
 
 
-        $_SESSION['idZoo'] = $existingZoo['id'];
-        // var_dump($_SESSION['idZoo']);
-     
+            header('Location: ./class/Interface.php?error=J ai bien créé mon compte et je suis connecté !!!');
+        } else {
 
-}
-
-}
-
+            $_SESSION['idZoo'] = $existingZoo['id'];
+            header('Location: ./class/Interface.php?success=Mon compte existe déja et je suis connecté');
+        }
+    }
 }
